@@ -24,10 +24,8 @@ function hasClass(ele,cls) {
 				for (var i = 0; i < e.touches.length; i++) {
 				    // for each "movable" touch event:
   				//alert("x:"+e.touches[i].target)
-					console.log(e.touches[i]);
-					console.log(e.touches[i].target);
-					console.log(e.touches[i].target.className);
-					
+					console.log("touch start " + i + " " + e.touches[i].target.className + " id:" + e.touches[i].target.id);
+					console.log("movable element: " + movableTarget(e.touches[i].target).className);
 					if (hasClass(e.touches[i].target, "movable")) {
 						
 						var id = e.touches[i].identifier;
@@ -113,4 +111,12 @@ function hasClass(ele,cls) {
 				'translate('+element.xfmTX+'px,'+element.xfmTY+'px) '+
 				'scale('+element.xfmS+') '+
 				'rotate('+element.xfmR+'deg)';
+		}
+		
+		function movableTarget(element){
+			top_element = element;
+			while (top_element.id == "") {
+				top_element = top_element.parentNode;
+			}
+			return top_element;
 		}
