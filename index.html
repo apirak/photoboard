@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+	<meta name = "viewport" content = "user-scalable=no, width=device-width"> 
+	<title>virtual light table</title> 
+	
+	<style type="text/css">
+		.movable {
+			color: #abc;
+			background-color: #123;
+		}
+		.text {
+			padding: 100px;			
+			font-size: 50px;
+		}
+	</style>
+	
+	<script type="text/javascript" charset="utf-8" src="multitouch-fake.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="multitouch.js"></script> 
+	<script type="text/javascript" charset="utf-8"> 
+		// callback for json Flickr API:
+		function jsonFlickrApi(data) {
+			for (var i = 0; i < data.photos.photo.length; i++) {
+				var p = data.photos.photo[i],
+				img = document.createElement("img");
+				//img.src = 'http://farm'+p.farm+'.static.flickr.com/'+p.server+'/'+p.id+'_'+p.secret+'_m.jpg';
+				img.src = p.src
+				img.className = "movable";
+				img.xfmTX = Math.random()*(window.innerWidth-240);
+				img.xfmTY = Math.random()*(window.innerHeight-240);
+				img.xfmR = Math.random()*180-90;
+				img.xfmS = Math.random()/2+0.5;
+				img.setAttribute("style", "position: absolute; top: 0px; left: 0px;");
+				document.body.appendChild(img);
+				updateTransform(img);
+			}
+		}
+		
+		function init() {
+			// touch event listeners
+			document.addEventListener("touchstart", touchHandler, false);
+			document.addEventListener("touchmove", touchHandler, false);
+			document.addEventListener("touchend", touchHandler, false);
+			document.addEventListener("touchcancel", touchHandler, false);
+			
+			// get the 10 latest "interesting images" from Flickr
+			//var flickrApiCall = document.createElement("script");
+			//document.body.appendChild(flickrApiCall);
+			//flickrApiCall.src = 'board_data.js';
+			
+			var bank = document.getElementById("bank");
+			bank.xfmTX = Math.random()*(window.innerWidth-240);
+			bank.xfmTY = Math.random()*(window.innerHeight-240);
+			bank.xfmR = Math.random()*180-90;
+			bank.xfmS = Math.random()/2+0.5;
+			bank.setAttribute("style", "position: absolute; top: 0px; left: 0px;");
+			updateTransform(bank);
+			
+			var bank2 = document.getElementById("bank2");
+			bank2.xfmTX = Math.random()*(window.innerWidth-240);
+			bank2.xfmTY = Math.random()*(window.innerHeight-240);
+			bank2.xfmR = Math.random()*180-90;
+			bank2.xfmS = Math.random()/2+0.5;
+			bank2.setAttribute("style", "position: absolute; top: 0px; left: 0px;");
+			updateTransform(bank2);
+			
+		}
+	</script> 
+</head> 
+ 
+<body onload="init();" style="width: 100%; height: 100%; background-color: black;"> 
+	<div id="bank" class="movable text" >
+		Bank
+	</div>
+	
+	<img id="bank2" class="movable" src="images/photo_1.jpg" />
+	
+</body> 
+</html>
