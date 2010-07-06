@@ -10,5 +10,7 @@ Current
 
 Next
 
+* Fix auto rotate
+* Fix unexpect object warp to finger not move
+  - This event happen after rotate image and touch on blank space
 * Use more than 2 finger
-
