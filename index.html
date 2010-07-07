@@ -39,18 +39,16 @@
 	<script type="text/javascript" charset="utf-8" src="multitouch-fake.js"></script> 
 	<script type="text/javascript" charset="utf-8" src="multitouch.js"></script> 
 	<script type="text/javascript" charset="utf-8"> 
-		// callback for json Flickr API:
-		function jsonFlickrApi(data) {
-			for (var i = 0; i < data.photos.photo.length; i++) {
-				var p = data.photos.photo[i],
+
+		function addPhoto() {
+			for (var i = 1; i < 8; i++) {
 				img = document.createElement("img");
-				//img.src = 'http://farm'+p.farm+'.static.flickr.com/'+p.server+'/'+p.id+'_'+p.secret+'_m.jpg';
-				img.src = p.src
+				img.src = 'images/photo_'+i+'.jpg';
 				img.className = "movable";
-				img.xfmTX = Math.random()*(window.innerWidth-240);
-				img.xfmTY = Math.random()*(window.innerHeight-240);
+				img.xfmTX = Math.random()*(window.innerWidth-140);
+				img.xfmTY = Math.random()*(window.innerHeight-140);
 				img.xfmR = Math.random()*180-90;
-				img.xfmS = Math.random()/2+0.5;
+				img.xfmS = Math.random()/2;
 				img.setAttribute("style", "position: absolute; top: 0px; left: 0px;");
 				document.body.appendChild(img);
 				updateTransform(img);
@@ -85,17 +83,23 @@
 			bank2.setAttribute("style", "position: absolute; top: 0px; left: 0px;");
 			updateTransform(bank2);
 			
+			addPhoto();
+			
 		}
 	</script> 
 </head> 
  
 <body onload="init();" style="width: 100%; height: 100%; background-color: black;"> 
-	<div id="bank" class="movable text" >
-		<div class="in_bank">bank</div>		
-		<div class="cover">abc</div>
+	<div id="space">
+		<div id="bank" class="movable text" >
+			<div class="in_bank">bank</div>		
+			<div class="cover">abc</div>
+		</div>
+
+		<img id="bank2" class="movable" src="images/photo_1.jpg" />
+		
 	</div>
 	
-	<img id="bank2" class="movable" src="images/photo_1.jpg" />
 	
 </body> 
 </html>

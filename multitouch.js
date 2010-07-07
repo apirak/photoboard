@@ -30,8 +30,12 @@
  */
 
 function hasClass(ele,cls) {
-	if (ele.className != null) {
-		return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+	if (ele != null && ele.className != null) {
+		if (ele.className == cls) { 
+			return true 
+	  } else {
+			return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+		}
 	}else{
 		return false
 	}
@@ -51,7 +55,7 @@ function hasClass(ele,cls) {
 					//console.log("touch identifier: " + e.touches[i].identifier);
 					//console.log("movable value:" + movableTarget.xfmTX);
 					
-					if (hasClass(movableTarget, "movable")) {
+					if (movableTarget != null && hasClass(movableTarget, "movable")) {
 						
 						var id = e.touches[i].identifier;
 						
@@ -81,7 +85,7 @@ function hasClass(ele,cls) {
 						idB = e.touches[1].identifier;
 										
 					// if we've previously recorded initial rotate/scale mode data:
-					if (moving[idA] != null && moving[idA].rotateScaleMode && moving[idB].rotateScaleMode ) {
+					if (moving[idA] != null && moving[idA].rotateScaleMode && moving[idB] && moving[idB].rotateScaleMode ) {
 					    // calculate translation, rotation, and scale
 						moving[idA].target.xfmTX = ((moving[idA].positionCenter.x - moving[idA].mouseCenter.x) + ((e.touches[0].clientX + e.touches[1].clientX) / 2));
 						moving[idA].target.xfmTY = ((moving[idA].positionCenter.y - moving[idA].mouseCenter.y) + ((e.touches[0].clientY + e.touches[1].clientY) / 2));
@@ -123,9 +127,11 @@ function hasClass(ele,cls) {
 				}
 			}
 			else if (e.type == "touchend" || e.type == "touchcancel") {
-			    // clear each from the "moving" hash
-				for (var i = 0; i < e.touches.length; i++)
+			  // clear each from the "moving" hash
+			  //console.log("touchend");
+				for (var i = 0; i < e.touches.length; i++) {
 					delete moving[e.touches[i].identifier];
+				}
 			}
 			
 			e.preventDefault();
@@ -140,9 +146,12 @@ function hasClass(ele,cls) {
 		}
 		
 		function getMovableTarget(element){
-			top_element = element;
-			while (top_element.id == "") {
-				top_element = top_element.parentNode;
+			if(element.tagName != "HTML") {
+				top_element = element;
+				while (!(hasClass(top_element, "movable")) ) {
+					top_element = top_element.parentNode;
+				}
+				return top_element;
 			}
-			return top_element;
+			return null
 		}
